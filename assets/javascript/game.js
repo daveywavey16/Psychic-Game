@@ -1,129 +1,36 @@
-<!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>My First Object</title>
-  </head>
-  <body>
 
-  <h1>Car Adventures !!</h1>
-  
-  <div id="game">
-    <p>Press d, s or t to start playing!</p>
-  </div>
+  var Letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];  // list of all letter options
+  var youWin = 0; // Total Wins
+  var youLose = 0; // Total Losses
+  var guessesLeft = 10; // Remaining Guesses
+  var guessedLetters = []; //Array to capture user letter input
 
-  <script type="text/javascript">
-    // Creates an array that lists out all of the options (Rock, Paper, or Scissors).
-   
-      var car = {
-        make: "Honda",
-        model: "Fit",
-        color: "Blue Raspberry",
-        mileage: 3000,
-        isWorking: true,
+  document.onkeyup = function(event) {
+    var yourGuess = event.key; //variable to calculate user's guess
+    guessedLetters.push(yourGuess); //This is suppose to capture letters .push = adds one or more elements to the end of an array and returns the new length of the array.
+    var psychicAns = Letters[Math.floor(Math.random() * Letters.length)]; //randomly generates computers letter choice. 
 
-        driveToWork: function() {
+    //If your guess matches the psychic's guess,
+    //a point is added to the "Wins" tally and the guesses tally restarts.
+    if (yourGuess === psychicAns) {
+      youWin++;
+      guessesLeft = 10;
+    }
+    //If your does not not match the psychic's guess, your number of  guesses remaining are deducted.
+    else {
+      guessesLeft--;
+    }
 
-          alert("Old Mileage: " + this.mileage);
-
-          this.mileage = this.mileage + 8;
-
-          alert("New mileage: " + this.mileage);
-        },
-
-        driveAroundWorld: function() {
-
-          alert("Old Mileage: " + this.mileage);
-
-          this.mileage = this.mileage + 24000;
-
-          alert("New Mileage: " + this.mileage);
-          alert("Car needs a tuneup!");
-
-          this.isWorking = false;
-        },
-
-        getTuneUp: function() {
-          alert("Car is ready to go!");
-          this.isWorking = true;
-        },
-
-        honk: function() {
-          alert("Honk! Honk!");
-        },
-        
-        reWriteStats: function() {
-	        console.log(this.make);
-	        console.log(this.model);
-	        console.log(this.color);
-	        console.log(this.mileage);
-	        console.log(this.isWorking);
-        }
-        
-        
-      };
-	  
-	  document.onkeyup = function(event) {
-
-	  var choices = ["d", "s", "t"];
-
-    // This function is run whenever the user presses a key.
-    	    
-	    
-      // Determines which key was pressed.
-      var userGuess = event.key.toLowerCase();
-      console.log(userGuess);
-	  
-	  if (userGuess === "d"){
-		  car.driveToWork();
-	  }
-	  
-	  if (userGuess === "s"){
-		  car.driveAroundWorld();
-	  }
-
-	  if (userGuess === "t"){
-		  car.getTuneUp();
-	  }
-	  car.reWriteStats();
-	  
+    //If the guesses remaining equals 0, you lose, an increment is added to  the "Losses" tally and the points restart.
+    if (guessesLeft === 0){
+      youLose++;
+      guessesLeft = 10;
+    }
 
 
-
-      // How would we log...
-
-/*
-      // The car's make?
-	  	console.log(car.make);
-      // The car's model?
-	    console.log(car.model);
-      // The car's mileage?
-	    console.log(car.mileage);
-      // How would we run the car's driveToWork method?
-	  	car.driveToWork();
-      // How would we run the car's driveAroundWorld method?
-	    car.driveAroundWorld();
-      // How would we run the getTuneUp method?
-	  	car.getTuneUp();
-*/
-	  	
-	  	
-	  }
-	  	
-	  	
-	  	
-	  	
-    </script>
+    var html = "<p>Guess what letter I'm thinking of:</p>" + "<p>Wins: " + youWin + "</p>" + "<p>Loses: "+ youLose + "<p>Guesses Remaining: " + guessesLeft + "<p>Guessed Letter: " +  guessedLetters.join(', '); //Show guessed letters here
+    document.querySelector("#psychicAct").innerHTML = html;
     
-  </body>
-</html>
+   
 
-<!--
-Instructions
-Using the code from the previous activity as a starting point, create a complete application that meets the following specifications:
-Users can enter keyboard input (letters).
-Each of the car's methods are assigned to a key.
-When the user presses a key it calls the appropriate function.
-These letters also trigger a global function called reWriteStats() that logs the car’s make, model, color, mileage, and isWorking status to the console.
-HINT: You will need to use the document.onkeyup() function to collect input from the user's keyboard.
--->
+  }
