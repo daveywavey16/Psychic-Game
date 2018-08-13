@@ -25,6 +25,7 @@
     if (guessesLeft === 0){
       youLose++;
       guessesLeft = 10;
+      guessedLetters = [];
     }
 
 
